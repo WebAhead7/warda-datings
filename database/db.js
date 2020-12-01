@@ -1,14 +1,14 @@
-var MongoClient = require("mongodb").MongoClient;
-require("dotenv").config();
+var MongoClient = require('mongodb').MongoClient;
+require('dotenv').config();
 const url = process.env.dataBaseMongoUrl;
-const dbName = "webahead7";
+const dbName = 'webahead7';
 function insertPost(post, callback) {
   MongoClient.connect(url, function (err, db) {
     var dbo = db.db(dbName);
 
     if (err) callback(err);
 
-    dbo.collection("posts").insertOne(post, function (err, res) {
+    dbo.collection('posts').insertOne(post, function (err, res) {
       if (err) {
         callback(err);
       } else {
@@ -22,7 +22,7 @@ function deletetPost(id, callback) {
   MongoClient.connect(url, function (err, db) {
     var dbo = db.db(dbName);
 
-    dbo.collection("posts").deleteOne({ _d: id }, function (err, obj) {
+    dbo.collection('posts').deleteOne({ _d: id }, function (err, obj) {
       if (err) {
         callback(err);
       } else {
@@ -39,7 +39,7 @@ function getUserPosts(userId, callback) {
     } else {
       var dbo = db.db(dbName);
       dbo
-        .collection("posts")
+        .collection('posts')
         .find({}, { projection: { ownerId: userId } })
         .toArray(function (err, result) {
           if (err) {
@@ -59,7 +59,7 @@ function getPost(id, callback) {
     } else {
       var dbo = db.db(dbName);
       dbo
-        .collection("posts")
+        .collection('posts')
         .find({}, { projection: { _id: id } })
         .toArray(function (err, result) {
           if (err) {
@@ -103,7 +103,7 @@ function updatePost(id, newPost, callback) {
       var myquery = { _id: id };
       var newvalues = { $set: newPost };
       dbo
-        .collection("posts")
+        .collection('posts')
         .updateOne(myquery, newvalues, function (err, res) {
           if (err) {
             callback(err);
