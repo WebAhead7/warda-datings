@@ -15,6 +15,10 @@ const Navbar = () => {
           <li>
             <Link to="/posts">Posts</Link>
           </li>
+
+          <li>
+            <Link to="/postform">Add Post</Link>
+          </li>
           <li>
             {/* <Link to="/myPosts">About</Link> */}
             <a href="#!">My Posts</a>

@@ -16,10 +16,16 @@ const PostState = (props) => {
 
   const [state, dispatch] = useReducer(postReducer, initialState);
 
+  // Add post
+  const addPost = (post) => {
+    dispatch({ type: 'ADD_POST', payload: post });
+  };
+
   return (
     <PostContext.Provider
       value={{
         posts: state.posts,
+        addPost,
       }}
     >
       {props.children}

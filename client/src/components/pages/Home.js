@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Home = () => {
   return (
@@ -8,7 +9,9 @@ const Home = () => {
           href="#!"
           className="waves-effect waves-light red lighten-2 btn center-align"
         >
-          Sign In
+          <Link to="login" style={{ color: 'inherit' }}>
+            LogIn
+          </Link>
         </a>
       </div>
 
@@ -17,7 +20,9 @@ const Home = () => {
           href="#!"
           className="waves-effect waves-light red lighten-2  btn center-align"
         >
-          Sign Up
+          <Link to="/register" style={{ color: 'inherit' }}>
+            Register
+          </Link>
         </a>
       </div>
     </div>
