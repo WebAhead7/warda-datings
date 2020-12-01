@@ -2,13 +2,14 @@ var MongoClient = require("mongodb").MongoClient;
 require("dotenv").config();
 const url = process.env.dataBaseMongoUrl;
 const dbName = "webahead7";
+const collectionName = "posts";
 function insertPost(post, callback) {
   MongoClient.connect(url, function (err, db) {
     var dbo = db.db(dbName);
 
     if (err) callback(err);
 
-    dbo.collection("posts").insertOne(post, function (err, res) {
+    dbo.collection(collectionName).insertOne(post, function (err, res) {
       if (err) {
         callback(err);
       } else {
@@ -22,7 +23,7 @@ function deletetPost(id, callback) {
   MongoClient.connect(url, function (err, db) {
     var dbo = db.db(dbName);
 
-    dbo.collection("posts").deleteOne({ _d: id }, function (err, obj) {
+    dbo.collection(collectionName).deleteOne({ _d: id }, function (err, obj) {
       if (err) {
         callback(err);
       } else {
@@ -39,7 +40,7 @@ function getUserPosts(userId, callback) {
     } else {
       var dbo = db.db(dbName);
       dbo
-        .collection("posts")
+        .collection(collectionName)
         .find({}, { projection: { ownerId: userId } })
         .toArray(function (err, result) {
           if (err) {
@@ -59,7 +60,7 @@ function getPost(id, callback) {
     } else {
       var dbo = db.db(dbName);
       dbo
-        .collection("posts")
+        .collection(collectionName)
         .find({}, { projection: { _id: id } })
         .toArray(function (err, result) {
           if (err) {
@@ -80,7 +81,7 @@ function getPosts(callback) {
       callback(err, null);
     } else {
       dbo
-        .collection(dbName)
+        .collection(collectionName)
         .find({})
         .toArray(function (err, result) {
           if (err) {
@@ -103,7 +104,7 @@ function updatePost(id, newPost, callback) {
       var myquery = { _id: id };
       var newvalues = { $set: newPost };
       dbo
-        .collection("posts")
+        .collection(collectionName)
         .updateOne(myquery, newvalues, function (err, res) {
           if (err) {
             callback(err);
