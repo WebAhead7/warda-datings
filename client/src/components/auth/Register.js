@@ -8,41 +8,68 @@ const Register = () => {
     password2: '',
   });
 
-  const { name, emai, password, password2 } = user;
+  const { name, email, password, password2 } = user;
+
+  const onChange = (e) => setUser({ ...user, [e.target.name]: e.target.value });
+
   return (
     <div>
-      <div class="row">
-        <div class="input-field col s6">
-          <input value="Alvin" id="name" type="text" class="validate" />
-          <label class="active" for="name">
+      <div className="row">
+        <div className="input-field col s6">
+          <input
+            value={name}
+            id="name"
+            type="text"
+            className="validate"
+            onChange={onChange}
+          />
+          <label className="active" htmlFor="name">
             Name
           </label>
         </div>
       </div>
 
-      <div class="row">
-        <div class="input-field col s6">
-          <input value="Alvin" id="name" type="text" class="validate" />
-          <label class="active" for="name">
-            Name
+      <div className="row">
+        <div className="input-field col s6">
+          <input
+            value={email}
+            id="email"
+            type="email"
+            className="validate"
+            onChange={onChange}
+          />
+          <label className="active" htmlFor="email">
+            Email
           </label>
         </div>
       </div>
 
-      <div class="row">
-        <div class="input-field col s6">
-          <input value="Alvin" id="name" type="text" class="validate" />
-          <label class="active" for="name">
-            Name
+      <div className="row">
+        <div className="input-field col s6">
+          <input
+            value={password}
+            id="password"
+            type="password"
+            className="validate"
+            onChange={onChange}
+          />
+          <label className="active" htmlFor="password">
+            Password
           </label>
         </div>
       </div>
 
-      <div class="row">
-        <div class="input-field col s6">
-          <input value="Alvin" id="name" type="text" class="validate" />
-          <label class="active" for="name">
-            Name
+      <div className="row">
+        <div className="input-field col s6">
+          <input
+            value={password2}
+            id="password2"
+            type="password"
+            className="validate"
+            onChange={onChange}
+          />
+          <label className="active" htmlFor="password2">
+            Confirm Password
           </label>
         </div>
       </div>

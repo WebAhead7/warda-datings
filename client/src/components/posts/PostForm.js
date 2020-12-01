@@ -21,44 +21,44 @@ const PostForm = () => {
   };
 
   return (
-    <div class="row">
-      <form class="col s12" onSubmit={onSubmit}>
-        <div class="row">
-          <div class="input-field col s12">
+    <div className="row">
+      <form className="col s12" onSubmit={onSubmit}>
+        <div className="row">
+          <div className="input-field col s12">
             <input
               id="title"
               type="text"
               value={title}
-              class="validate"
+              className="validate"
               onChange={(e) => setPost({ title: e.target.value, content })}
             />
-            <label for="title">Title</label>
+            <label htmlFor="title">Title</label>
           </div>
         </div>
 
-        <div class="row">
-          <form class="col s12">
-            <div class="row">
-              <div class="input-field col s12">
+        <div className="row">
+          <form className="col s12">
+            <div className="row">
+              <div className="input-field col s12">
                 <textarea
                   value={content}
                   onChange={(e) => setPost({ title, content: e.target.value })}
                   id="textarea1"
-                  class="materialize-textarea"
+                  className="materialize-textarea"
                 ></textarea>
-                <label for="textarea1">Textarea</label>
+                <label htmlFor="textarea1">Textarea</label>
               </div>
             </div>
           </form>
         </div>
 
         <button
-          class="btn waves-effect waves-light"
+          className="btn waves-effect waves-light"
           type="submit"
           name="action"
         >
           Submit
-          <i class="material-icons right">send</i>
+          <i className="material-icons right">send</i>
         </button>
       </form>
     </div>
