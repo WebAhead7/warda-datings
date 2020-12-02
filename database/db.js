@@ -1,5 +1,4 @@
 var MongoClient = require("mongodb").MongoClient;
-require("dotenv").config();
 ObjectId = require("mongodb").ObjectID;
 
 const url = process.env.dataBaseMongoUrl;
