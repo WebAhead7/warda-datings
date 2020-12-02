@@ -14,7 +14,6 @@ function verifyUser(req, res, next) {
   const token = auth.replace("Bearer ", "");
   try {
     const data = jwt.verify(token, SECRET);
-
     db.getUser({ _id: new ObjectID(data.user) }, function (err, result) {
       if (err) {
         next(err);

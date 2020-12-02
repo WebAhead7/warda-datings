@@ -75,7 +75,7 @@ function getPostsGender(req, res, next) {
               if (err) {
                 next(err);
               } else {
-                if (r.length > 0) {
+                if (r != null) {
                   arr.push(el);
                 }
                 if (index === result.length - 1) {

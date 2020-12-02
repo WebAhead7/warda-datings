@@ -1,5 +1,6 @@
 var MongoClient = require("mongodb").MongoClient;
 ObjectId = require("mongodb").ObjectID;
+require("dotenv").config();
 
 const url = process.env.dataBaseMongoUrl;
 const dbName = "webahead7";
