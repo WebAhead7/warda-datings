@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require("cors");
 const posts = require("./handlers/posts");
 const users = require("./handlers/users");
 const auth = require("./midllware/auth");
@@ -7,6 +8,7 @@ require("dotenv").config();
 const PORT = process.env.PORT || 3000;
 const server = express();
 server.use(express.json());
+app.use(cors());
 const handleError = require("./midllware/error");
 const { logIn } = require("./handlers/login");
 server.post("/login", logIn);
