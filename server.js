@@ -1,17 +1,28 @@
 const express = require("express");
 const posts = require("./handlers/posts");
+const users = require("./handlers/users");
+const auth = require("./midllware/auth");
 
 const PORT = process.env.PORT || 3000;
 const server = express();
 server.use(express.json());
-server.get("/posts", posts.getPosts);
-server.get("/posts/:gender", posts.getPostsGender);
+const handleError = require("./midllware/error");
+const { logIn } = require("./handlers/login");
+server.post("/login", logIn);
+server.get("/user/:id", auth.verifyUser, users.getUser);
+server.post("/user", users.addUser);
+server.get("/users", auth.verifyUser, users.getUsers);
+server.get("/userByGender/:gender", auth.verifyUser, users.getUsersByGender);
 
-server.get("/posts/:id", posts.getPost);
-server.get("/posts/:userId", posts.getUserPosts);
+server.get("/posts", auth.verifyUser, posts.getPosts);
+server.get("/postsByGender/:gender", auth.verifyUser, posts.getPostsGender);
 
-server.post("/posts", posts.addPost);
-server.delete("/posts/:id", posts.deletePost);
-server.put("/posts/:id", posts.updatePost);
+server.get("/post/:id", auth.verifyUser, posts.getPost);
+server.get("/userPosts/:userId", auth.verifyUser, posts.getUserPosts);
+
+server.post("/post", auth.verifyUser, posts.addPost);
+server.delete("/post/:id", auth.verifyUser, posts.deletePost);
+server.put("/post/:id", auth.verifyUser, posts.updatePost);
+server.use(handleError);
 
 server.listen(PORT, () => console.log(`Listening on http://localhost:${PORT}`));

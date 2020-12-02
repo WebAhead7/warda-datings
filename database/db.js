@@ -1,15 +1,75 @@
 var MongoClient = require("mongodb").MongoClient;
 require("dotenv").config();
+ObjectId = require("mongodb").ObjectID;
+
 const url = process.env.dataBaseMongoUrl;
 const dbName = "webahead7";
-const collectionName = "posts";
+const collectionPosts = "posts";
+const collectionUsers = "users";
+
+function insertUser(user, callback) {
+  MongoClient.connect(url, function (err, db) {
+    var dbo = db.db(dbName);
+
+    if (err) callback(err);
+
+    dbo.collection(collectionUsers).insertOne(user, function (err, res) {
+      if (err) {
+        callback(err);
+      } else {
+        db.close();
+        callback(null);
+      }
+    });
+  });
+}
+function getUsersWithCondition(condition, callback) {
+  MongoClient.connect(url, function (err, db) {
+    if (err) {
+      callback(err, null);
+    } else {
+      var dbo = db.db(dbName);
+      dbo
+        .collection(collectionUsers)
+        .find(condition)
+        .toArray(function (err, result) {
+          if (err) {
+            callback(err, null);
+          } else {
+            db.close();
+            callback(null, result);
+          }
+        });
+    }
+  });
+}
+function getUser(condition, callback) {
+  MongoClient.connect(url, function (err, db) {
+    if (err) {
+      callback(err, null);
+    } else {
+      var dbo = db.db(dbName);
+      dbo
+        .collection(collectionUsers)
+        .findOne(condition, function (err, result) {
+          if (err) {
+            callback(err, null);
+          } else {
+            db.close();
+            callback(null, result);
+          }
+        });
+    }
+  });
+}
+
 function insertPost(post, callback) {
   MongoClient.connect(url, function (err, db) {
     var dbo = db.db(dbName);
 
     if (err) callback(err);
 
-    dbo.collection(collectionName).insertOne(post, function (err, res) {
+    dbo.collection(collectionPosts).insertOne(post, function (err, res) {
       if (err) {
         callback(err);
       } else {
@@ -23,14 +83,16 @@ function deletetPost(id, callback) {
   MongoClient.connect(url, function (err, db) {
     var dbo = db.db(dbName);
 
-    dbo.collection(collectionName).deleteOne({ _d: id }, function (err, obj) {
-      if (err) {
-        callback(err);
-      } else {
-        db.close();
-        callback(null);
-      }
-    });
+    dbo
+      .collection(collectionPosts)
+      .deleteOne({ _id: new ObjectId(id) }, function (err, obj) {
+        if (err) {
+          callback(err);
+        } else {
+          db.close();
+          callback(null);
+        }
+      });
   });
 }
 function getUserPosts(userId, callback) {
@@ -40,8 +102,8 @@ function getUserPosts(userId, callback) {
     } else {
       var dbo = db.db(dbName);
       dbo
-        .collection(collectionName)
-        .find({}, { projection: { ownerId: userId } })
+        .collection(collectionPosts)
+        .find({ ownerId: userId })
         .toArray(function (err, result) {
           if (err) {
             callback(err, null);
@@ -60,8 +122,8 @@ function getPost(id, callback) {
     } else {
       var dbo = db.db(dbName);
       dbo
-        .collection(collectionName)
-        .find({}, { projection: { _id: id } })
+        .collection(collectionPosts)
+        .find({ _id: new ObjectId(id) })
         .toArray(function (err, result) {
           if (err) {
             callback(err, null);
@@ -81,7 +143,28 @@ function getPosts(callback) {
       callback(err, null);
     } else {
       dbo
-        .collection(collectionName)
+        .collection(collectionPosts)
+        .find({})
+        .toArray(function (err, result) {
+          if (err) {
+            callback(err, null);
+          } else {
+            db.close();
+            callback(null, result);
+          }
+        });
+    }
+  });
+}
+function getUsers(callback) {
+  MongoClient.connect(url, function (err, db) {
+    var dbo = db.db(dbName);
+
+    if (err) {
+      callback(err, null);
+    } else {
+      dbo
+        .collection(collectionUsers)
         .find({})
         .toArray(function (err, result) {
           if (err) {
@@ -101,10 +184,10 @@ function updatePost(id, newPost, callback) {
       callback(err, null);
     } else {
       var dbo = db.db(dbName);
-      var myquery = { _id: id };
+      var myquery = { _id: new ObjectId(id) };
       var newvalues = { $set: newPost };
       dbo
-        .collection(collectionName)
+        .collection(collectionPosts)
         .updateOne(myquery, newvalues, function (err, res) {
           if (err) {
             callback(err);
@@ -124,4 +207,8 @@ module.exports = {
   getPost,
   updatePost,
   getUserPosts,
+  insertUser,
+  getUser,
+  getUsers,
+  getUsersWithCondition,
 };
