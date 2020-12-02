@@ -4,14 +4,11 @@
   "description": "",
   "main": "server.js",
   "dependencies": {
-    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^3.6.3",
-    "node": "^15.3.0",
-    "nodemon": "^2.0.6"
+    "node": "^15.3.0"
   },
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon server.js"
@@ -25,5 +22,9 @@
   "bugs": {
     "url": "https://github.com/WebAhead7/warda-datings/issues"
   },
-  "homepage": "https://github.com/WebAhead7/warda-datings#readme"
+  "homepage": "https://github.com/WebAhead7/warda-datings#readme",
+  "devDependencies": {
+    "dotenv": "^8.2.0",
+    "nodemon": "^2.0.6"
+  }
 }
