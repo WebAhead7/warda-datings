@@ -8,7 +8,7 @@ require("dotenv").config();
 const PORT = process.env.PORT || 3000;
 const server = express();
 server.use(express.json());
-app.use(cors());
+server.use(cors());
 const handleError = require("./midllware/error");
 const { logIn } = require("./handlers/login");
 server.post("/login", logIn);
