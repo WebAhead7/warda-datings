@@ -15,11 +15,24 @@ function getUsers(req, res, next) {
   });
 }
 function addUser(req, res, next) {
-  db.insertUser(req.body, function (err) {
+  db.getUser({ email: req.body.email }, function (err, result) {
     if (err) {
       next(err);
     } else {
-      res.status(201).send(req.body);
+      if (result) {
+        const errrro = new Error(
+          "Email already exist , please change your email"
+        );
+        next(errrro);
+      } else {
+        db.insertUser(req.body, function (err) {
+          if (err) {
+            next(err);
+          } else {
+            res.status(201).send(req.body);
+          }
+        });
+      }
     }
   });
 }
