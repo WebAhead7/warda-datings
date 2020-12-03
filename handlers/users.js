@@ -5,7 +5,12 @@ function getUsers(req, res, next) {
     if (err) {
       next(err);
     } else {
-      res.send(result);
+      if (result) res.send(result);
+      else {
+        const error = new Error("No users yet");
+        error.status = 204;
+        next(error);
+      }
     }
   });
 }
@@ -22,9 +27,16 @@ function getUser(req, res, next) {
   const id = req.params.id;
   db.getUser({ _id: new ObjectID(id) }, function (err, result) {
     if (err) {
-      next(err);
+      const error = new Error("No user with this id");
+      error.status = 204;
+      next(error);
     } else {
-      res.send(result);
+      if (result) res.send(result);
+      else {
+        const error = new Error("No user with this id");
+        error.status = 204;
+        next(error);
+      }
     }
   });
 }
